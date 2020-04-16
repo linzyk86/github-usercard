@@ -3,6 +3,17 @@
            https://api.github.com/users/<your name>
 */
 
+
+  axios.get('https://api.github.com/users/linzyk86')
+    .then((response)=>{
+      console.log(response);
+      let card = userCard(response.data);
+      cards.appendChild(card);  
+
+    })
+    .catch((err)=>{
+      console.log('error', err)
+    })
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
    data in order to use it to build your component function 
@@ -24,7 +35,69 @@
           user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = [ "tetondan",
+  "dustinmyers",
+  "justsml",
+  "luishrd",
+  "bigknell"
+  ];
+
+function userCard(data){
+  //<div class="card">
+  let card = document.createElement('div');
+  card.classList.add('card');
+  //<img src={image url of user} />
+  let img = document.createElement('img');
+  img.src = data.avatar_url;
+  //<div class="card-info">
+  let cardInfo = document.createElement('div');
+  cardInfo.classList.add('card-info');
+  //<h3 class="name">{users name}</h3>
+  let name = document.createElement('h3');
+  name.classList.add('name');
+  name.textContent = data.name;
+  //<p class="username">{users user name}</p>
+  let username = document.createElement('p');
+  username.classList.add('username');
+  username.textContent = data.login;
+  //<p>Location: {users location}</p>
+  let location = document.createElement('p');
+  location.textContent= `Location: ${data.location}`;
+  //<p>Profile:  
+    //  <a href={address to users github page}>{address to //users github page}</a>
+    //</p>
+  let profile = document.createElement('p');
+  profile.textContent = `Profile: ${data.profile}`;
+  let profileLink = document.createElement('a');
+  profileLink.href.src = data.html_url; 
+  //<p>Followers: {users followers count}</p>
+  let followers = document.createElement('p');
+  followers.textContent = `Followers: ${data.followers}`;
+  // <p>Following: {users following count}</p>
+  let following = document.createElement('p');
+  following.textContent = `Following: ${data.following}`;
+  //<p>Bio: {users bio}</p>
+  let bio = document.createElement('p');
+  bio.textContent = data.bio;
+
+  profile.appendChild(profileLink);
+  cardInfo.appendChild(name);
+  cardInfo.appendChild(username);
+  cardInfo.appendChild(location);
+  cardInfo.appendChild(profile);
+  cardInfo.appendChild(followers);
+  cardInfo.appendChild(following);
+  cardInfo.appendChild(bio);
+
+  card.appendChild(img);
+  card.appendChild(cardInfo);
+
+  return card;
+}
+
+let cards = document.querySelector('.cards');
+
+
  
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
