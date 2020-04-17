@@ -2,18 +2,34 @@
            (replacing the palceholder with your Github name):
            https://api.github.com/users/<your name>
 */
+let followersArray = [ "tetondan",
+  "dustinmyers",
+  "justsml",
+  "luishrd",
+  "bigknell"
+  ];
 
 
-  axios.get('https://api.github.com/users/linzyk86')
-    .then((response)=>{
+followersArray.forEach((follower)=>{
+  axios.get(`https://api.github.com/users/${follower}`)
+     .then((response)=>{
       console.log(response);
+      
       let card = userCard(response.data);
-      cards.appendChild(card);  
+        cards.appendChild(card);
 
     })
     .catch((err)=>{
       console.log('error', err)
     })
+
+
+})
+  
+   
+
+
+      
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
    data in order to use it to build your component function 
@@ -35,12 +51,7 @@
           user, and adding that card to the DOM.
 */
 
-const followersArray = [ "tetondan",
-  "dustinmyers",
-  "justsml",
-  "luishrd",
-  "bigknell"
-  ];
+  
 
 function userCard(data){
   //<div class="card">
